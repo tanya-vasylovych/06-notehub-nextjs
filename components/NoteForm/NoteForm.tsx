@@ -1,22 +1,22 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import css from './NoteForm.module.css';
-import { Field, Form, Formik, ErrorMessage, type FormikHelpers } from 'formik';
-import * as Yup from 'yup';
-import { createNote } from '../../services/noteService';
-import type { CreateNote, Note } from '../../types/note';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import css from "./NoteForm.module.css";
+import { Field, Form, Formik, ErrorMessage, type FormikHelpers } from "formik";
+import * as Yup from "yup";
+import { createNote } from "@/lib/api";
+import type { CreateNote, Note } from "../../types/note";
 
 interface NoteFormProps {
   onClose: () => void;
 }
 const ValidationSchema = Yup.object().shape({
   title: Yup.string()
-    .min(3, 'Title must have min 3 characters')
-    .max(50, 'Title must have max 50 characters')
-    .required('Required'),
-  content: Yup.string().max(500, 'Content must have max 500 characters'),
+    .min(3, "Title must have min 3 characters")
+    .max(50, "Title must have max 50 characters")
+    .required("Required"),
+  content: Yup.string().max(500, "Content must have max 500 characters"),
   tag: Yup.string()
-    .oneOf(['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'], 'Invalid tag')
-    .required('Required'),
+    .oneOf(["Todo", "Work", "Personal", "Meeting", "Shopping"], "Invalid tag")
+    .required("Required"),
 });
 
 const NoteForm = ({ onClose }: NoteFormProps) => {
@@ -24,7 +24,7 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
   const mutation = useMutation<Note, Error, CreateNote>({
     mutationFn: createNote,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] });
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
   });
 
@@ -42,10 +42,10 @@ const NoteForm = ({ onClose }: NoteFormProps) => {
   return (
     <Formik
       validationSchema={ValidationSchema}
-      initialValues={{ title: '', content: '', tag: 'Todo' }}
+      initialValues={{ title: "", content: "", tag: "Todo" }}
       onSubmit={handleSubmit}
     >
-      {formik => (
+      {(formik) => (
         <Form className={css.form}>
           <div className={css.formGroup}>
             <label htmlFor="title">Title</label>
