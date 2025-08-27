@@ -15,9 +15,6 @@ const NoteList = ({ notes }: NoteListProps) => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
   });
-  // const handleDelete = (id: Note) => {
-  //   mutation.mutate(id);
-  // };
   return (
     <ul className={css.list}>
       {notes.map((note) => (
